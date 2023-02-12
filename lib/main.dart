@@ -44,9 +44,7 @@ class App extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 120,
-              ),
+              const SizedBox(height: 100),
               Text(
                 'Total Balance',
                 style: TextStyle(
@@ -79,7 +77,7 @@ class App extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 100),
+              const SizedBox(height: 80),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -101,17 +99,17 @@ class App extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Container(
+                clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
                   color: const Color(0xFF1F2123),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(25),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,6 +145,17 @@ class App extends StatelessWidget {
                             ],
                           ),
                         ],
+                      ),
+                      Transform.scale(
+                        scale: 2.2,
+                        child: Transform.translate(
+                          offset: const Offset(10, 15),
+                          child: const Icon(
+                            Icons.euro_outlined,
+                            color: Colors.white,
+                            size: 98,
+                          ),
+                        ),
                       ),
                     ],
                   ),
