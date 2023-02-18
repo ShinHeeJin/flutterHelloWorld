@@ -1,4 +1,4 @@
-import 'package:first/screens/home_screen.dart';
+import 'package:first/screens/today_toons_home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         ),
         cardColor: const Color(0xFFF4EDDB),
       ),
-      home: const HomeScreen(),
+      home: const TodayToonsHomeScreen(),
     );
   }
 }
