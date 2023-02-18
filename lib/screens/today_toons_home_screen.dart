@@ -1,11 +1,12 @@
 import 'package:first/models/webtoon.dart';
 import 'package:first/services/api_service.dart';
 import 'package:flutter/material.dart';
+import 'package:first/widgets/my_webtoon_widget.dart';
 
 class TodayToonsHomeScreen extends StatelessWidget {
   TodayToonsHomeScreen({super.key});
 
-  final Future<List<WebToonModel>> webtoons = ApiService().getTodayToons();
+  final Future<List<WebToonModel>> webtoons = ApiService.getTodayToons();
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,7 @@ class TodayToonsHomeScreen extends StatelessWidget {
           elevation: 2,
           foregroundColor: Colors.green,
           backgroundColor: Colors.white,
-          title: const Text(
-            "오늘의 웹툰",
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
+          title: const Text("오늘의 웹툰", style: TextStyle(fontSize: 20)),
         ),
         body: FutureBuilder(
           future: webtoons,
@@ -46,37 +42,10 @@ class TodayToonsHomeScreen extends StatelessWidget {
   ListView makeWebToonListView(AsyncSnapshot<List<WebToonModel>> snapshot) {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 10,
-      ),
-      itemBuilder: (context, index) {
-        final webtoon = snapshot.data![index];
-        return Column(
-          children: [
-            Container(
-              width: 250,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 15,
-                      offset: const Offset(10, 10),
-                      color: Colors.black.withOpacity(0.4),
-                    ),
-                  ]),
-              child: Image.network(webtoon.thumb),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              webtoon.title,
-              style: const TextStyle(fontSize: 22),
-            ),
-          ],
-        );
-      },
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       itemCount: snapshot.data!.length,
+      itemBuilder: (context, index) =>
+          WebToonWidget(webtoon: snapshot.data![index]),
       separatorBuilder: (context, index) => const SizedBox(width: 15),
     );
   }
