@@ -27,11 +27,14 @@ class TodayToonsHomeScreen extends StatelessWidget {
           future: webtoons,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(
+              return ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) =>
                     Text(snapshot.data![index].title),
                 itemCount: snapshot.data!.length,
+                separatorBuilder: (context, index) => const SizedBox(
+                  width: 10,
+                ),
               );
             }
             return const Center(
