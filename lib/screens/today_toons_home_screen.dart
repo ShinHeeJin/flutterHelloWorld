@@ -1,13 +1,12 @@
+import 'package:first/models/webtoon.dart';
+import 'package:first/services/api_service.dart';
 import 'package:flutter/material.dart';
 
-class TodayToonsHomeScreen extends StatefulWidget {
-  const TodayToonsHomeScreen({super.key});
+class TodayToonsHomeScreen extends StatelessWidget {
+  TodayToonsHomeScreen({super.key});
 
-  @override
-  State<TodayToonsHomeScreen> createState() => _TodayToonsHomeScreenState();
-}
+  late Future<List<WebToonModel>> webtoons = ApiService().getTodayToons();
 
-class _TodayToonsHomeScreenState extends State<TodayToonsHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,6 +22,19 @@ class _TodayToonsHomeScreenState extends State<TodayToonsHomeScreen> {
               fontSize: 20,
             ),
           ),
+        ),
+        body: FutureBuilder(
+          future: webtoons,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return const Center(
+                child: Text("There is data!"),
+              );
+            }
+            return const Center(
+              child: Text("Loading ..."),
+            );
+          },
         ),
       ),
     );

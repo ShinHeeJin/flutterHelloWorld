@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
         cardColor: const Color(0xFFF4EDDB),
       ),
-      home: const TodayToonsHomeScreen(),
+      home: TodayToonsHomeScreen(),
     );
   }
 }
