@@ -2,6 +2,7 @@ import 'package:first/models/webtoon.dart';
 import 'package:first/models/webtoon_detail.dart';
 import 'package:first/models/webtoon_senario.dart';
 import 'package:first/services/api_service.dart';
+import 'package:first/widgets/webtoon_senario_widget.dart';
 import 'package:flutter/material.dart';
 
 class WebToonDetailScreen extends StatefulWidget {
@@ -111,33 +112,9 @@ class _WebToonDetailScreenState extends State<WebToonDetailScreen> {
                       return Column(
                         children: [
                           for (var senario in snapshot.data!)
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.green.shade400,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      senario.title,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    ),
-                                    const Icon(
-                                      Icons.chevron_right_rounded,
-                                      color: Colors.white,
-                                    )
-                                  ],
-                                ),
-                              ),
+                            SenarioWidget(
+                              webtoon: widget.webtoon,
+                              senario: senario,
                             )
                         ],
                       );
