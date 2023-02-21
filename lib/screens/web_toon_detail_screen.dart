@@ -4,10 +4,10 @@ import 'package:first/models/webtoon_senario.dart';
 import 'package:first/services/api_service.dart';
 import 'package:first/widgets/webtoon_senario_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WebToonDetailScreen extends StatefulWidget {
   final WebToonModel webtoon;
-
   const WebToonDetailScreen({
     super.key,
     required this.webtoon,
@@ -20,12 +20,45 @@ class WebToonDetailScreen extends StatefulWidget {
 class _WebToonDetailScreenState extends State<WebToonDetailScreen> {
   late Future<WebtoonDetailModel> webtoonDetail;
   late Future<List<WebtoonSenarioModel>> webtoonSenarios;
+  late SharedPreferences pref;
+  bool isLiked = false;
+
+  Future initPref() async {
+    pref = await SharedPreferences.getInstance();
+
+    final likedToons = pref.getStringList("likedToons");
+    if (likedToons != null) {
+      if (likedToons.contains(widget.webtoon.id) == true) {
+        setState(() {
+          isLiked = true;
+        });
+      }
+    } else {
+      await pref.setStringList("likedToons", []);
+    }
+  }
+
+  void onHeartTap() async {
+    final likedToons = pref.getStringList("likedToons");
+    if (likedToons != null) {
+      if (isLiked) {
+        likedToons.remove(widget.webtoon.id);
+      } else {
+        likedToons.add(widget.webtoon.id);
+      }
+      await pref.setStringList("likedToons", likedToons);
+      setState(() {
+        isLiked = !isLiked;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     webtoonDetail = ApiService.getWebtoonDetailById(widget.webtoon.id);
     webtoonSenarios = ApiService.getWebtoonSenariosById(widget.webtoon.id);
+    initPref();
   }
 
   @override
@@ -42,6 +75,13 @@ class _WebToonDetailScreenState extends State<WebToonDetailScreen> {
             fontSize: 20,
           ),
         ),
+        actions: [
+          IconButton(
+              onPressed: onHeartTap,
+              icon: Icon(
+                isLiked ? Icons.favorite : Icons.favorite_border_outlined,
+              ))
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(
